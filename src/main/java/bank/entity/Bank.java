@@ -1,16 +1,21 @@
 package bank.entity;
 
 import java.util.Random;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.Random;
 
+@Data // Создает геттеры и сеттеры для всех полей + toString, equals, hashCode и другие
+@NoArgsConstructor // Генерирует конструктор без параметров
+@AllArgsConstructor // Генерирует конструктор со всеми параметрами
 public class Bank {
     private String id; // Идентификатор банка
     private String name; // Имя банка
-    public int officeCount = 0; // Кол-во офисов
-    public int atmCount = 0; // Кол-во банкоматов
-    public int employeeCount = 0; // Кол-во сотрудников
-    public int clientCount = 0; // Кол-во клиентов
+    public int officeCount; // Кол-во офисов
+    public int atmCount; // Кол-во банкоматов
+    private int employeeCount; // Кол-во сотрудников
+    public int clientCount; // Кол-во клиентов
     private int rating; // Рейтинг банка
     private double totalMoney; // Всего денег в банке
     private double interestRate; // Процентная ставка

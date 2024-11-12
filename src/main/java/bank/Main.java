@@ -2,102 +2,109 @@ package bank;
 
 import bank.entity.*;
 import bank.service.impl.*;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        List<Bank> banks = new ArrayList<>();
-        Random random = new Random();
+        // Автоматическая инициализация банковского офиса
+        BankOffice office = new BankOffice(
+                "1", // ID
+                "Главный офис", // Название
+                "Улица Главная, 1", // Адрес
+                "работает", // Статус
+                true, // Можно ли разместить банкомат
+                0, // Начальное количество банкоматов
+                true, // Можно ли оформить кредит
+                true, // Можно ли выдавать деньги
+                true, // Можно ли вносить деньги
+                1500.00, // Стоимость аренды
+                0 // Начальное количество денег в офисе
+        );
 
-        // Создаем 5 банков
-        for (int b = 1; b <= 5; b++) {
-            Bank bank = new Bank("B" + b, "Банк " + b);
-            banks.add(bank);
+        // Вывод информации о банковском офисе
+        System.out.println(office);
 
-            // Создаем 3 банковских офиса для каждого банка
-            for (int o = 1; o <= 3; o++) {
-                BankOffice office = new BankOffice(
-                        "O" + o + "B" + b,
-                        "Офис " + o + " банка " + b,
-                        "Улица " + random.nextInt(100), // Генерация случайного адреса
-                        true,
-                        true,
-                        true,
-                        true,
-                        1500.00
-                );
+        // Автоматическая инициализация банка
+        Bank bank = new Bank("1", "Мой Банк");
+        System.out.println(bank);
 
-                bank.officeCount++;
+        // Автоматическая инициализация банкомата
+        BankAtm atm = new BankAtm(
+                "ATM001", // ID банкомата
+                "Банкомат 1", // Имя банкомата
+                "Улица Главная, 2", // Адрес
+                bank, // Банк
+                "Рядом с офисом", // Расположение
+                "Иванов И.И.", // Обслуживающий сотрудник
+                true, // Можно ли выдавать деньги
+                true, // Можно ли вносить деньги
+                50000.00, // Кол-во денег в банкомате
+                200.00 // Стоимость обслуживания
+        );
 
-                // Список сотрудников для этого офиса
-                List<Employee> employees = new ArrayList<>();
+        // Вывод информации о банкомате
+        System.out.println(atm);
 
-                // Создаем 5 сотрудников в каждом офисе
-                for (int e = 1; e <= 5; e++) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(1990 + random.nextInt(30), random.nextInt(12), random.nextInt(28)); // Случайная дата рождения
-                    Date birthDate = calendar.getTime();
-                    Employee employee = new Employee(
-                            "E" + e + "B" + b,
-                            "Сотрудник " + e,
-                            birthDate,
-                            "Менеджер",
-                            bank,
-                            false,
-                            office,
-                            true,
-                            50000
-                    );
+        // Создание объекта пользователя
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1990, Calendar.JANUARY, 1); // Установка даты рождения
+        Date birthDate = calendar.getTime();
 
-                    employees.add(employee); // Добавляем сотрудника в список
-                    // Вывод информации о сотруднике
-                    System.out.println(employee);
-                }
+        User user = new User("U001", "Иванов Иван", birthDate, "ООО Ромашка", 0, null, null, null, 0);
 
-                // Создаем 5 клиентов для каждого офиса
-                for (int c = 1; c <= 5; c++) {
-                    User user = new User("U" + c + "B" + b, "Клиент " + c, new Date(), "Компания " + c);
+        // Создание объектов банков
+        Bank bank1 = new Bank("B001", "Мой Банк");
+        Bank bank2 = new Bank("B002", "Другой Банк");
 
-                    // Использование случайного сотрудника для кредита
-                    Employee employee = employees.get(random.nextInt(employees.size()));
+        // Добавление банков в список пользователя
+        user.getBanks().add(bank1);
+        user.getBanks().add(bank2);
 
-                    // Создаем кредитный счет для каждого клиента
-                    CreditAccount creditAccount = new CreditAccount(
-                            "CA" + c + "B" + b,
-                            user,
-                            bank,
-                            new Date(),
-                            new Date(System.currentTimeMillis() + 365 * 24 * 60 * 60 * 1000), // Кредит на 1 год
-                            12, // 12 месяцев
-                            50000,
-                            5.0,
-                            employee,
-                            "РQ1234567890"
-                    );
+        // Создание объекта сотрудника
+        Employee employee = new Employee(
+                "E001", // ID сотрудника
+                "Петров Петр", // ФИО сотрудника
+                birthDate, // Дата рождения
+                "Менеджер по кредитам", // Должность
+                bank, // Банк, в котором работает
+                false, // Работает ли удаленно
+                office, // Банковский офис
+                true, // Может ли выдавать кредиты
+                50000 // Размер зарплаты
+        );
 
-                    user.getCreditAccounts().add(creditAccount);
+        // Вывод информации о сотруднике
+        System.out.println(employee);
 
-                    // Создаем платежный счет для каждого клиента
-                    PaymentAccount paymentAccount = new PaymentAccount("PA" + c + "B" + b, user, bank);
-                    user.getPaymentAccounts().add(paymentAccount);
+        // Создание объекта кредитного счета
+        CreditAccount creditAccount = new CreditAccount(
+                "CA001",
+                user,
+                bank1,
+                new Date(), // Дата начала кредита
+                new Date(System.currentTimeMillis() + 365 * 24 * 60 * 60 * 1000), // Дата окончания кредита, через год
+                12, // Количество месяцев
+                50000, // Сумма кредита
+                5.0, // Процентная ставка
+                employee,
+                "RU1234567890" // Платежный счет для погашения кредита
+        );
 
-                    // Добавление клиента в банк
-                    bank.clientCount++;
+        // Добавление кредитного счета к пользователю
+        user.getCreditAccounts().add(creditAccount);
 
-                    // Вывод информации о клиенте
-                    System.out.println(user);
-                }
+        // Вывод информации о пользователе
+        System.out.println(user);
 
-                // Вывод информации о банковом офисе
-                System.out.println(office);
-            }
+        // Вывод информации о кредитном счете
+        System.out.println(creditAccount);
 
-            // Вывод информации о банке
-            System.out.println(bank);
-        }
+        // Создание платежного счета
+        PaymentAccount paymentAccount = new PaymentAccount("PA001", user, bank, 0);
+
+        // Вывод информации о платёжном счете
+        System.out.println(paymentAccount);
     }
 }
