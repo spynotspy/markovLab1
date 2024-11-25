@@ -23,15 +23,6 @@ public class User {
     private List<PaymentAccount> paymentAccounts = new ArrayList<>(); // Инициализация списка платёжных счетов
     private int creditRating; // Кредитный рейтинг
 
-    // Конструктор с параметрами
-    public User(String id, String fullName, Date birthDate, String workplace) {
-        this.id = id;
-        this.fullName = fullName;
-        this.birthDate = birthDate;
-        this.workplace = workplace;
-        this.monthlyIncome = generateMonthlyIncome(); // Генерация месячного дохода
-        this.creditRating = calculateCreditRating(); // Рассчет кредитного рейтинга
-    }
 
     // Метод для генерации рандомного месячного дохода (от 0 до 10 000)
     private double generateMonthlyIncome() {

@@ -1,10 +1,13 @@
 package bank.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.Random;
 
 @Data // Создает геттеры и сеттеры для всех полей + toString, equals, hashCode и другие
 @NoArgsConstructor // Генерирует конструктор без параметров
@@ -12,10 +15,10 @@ import java.util.Random;
 public class Bank {
     private String id; // Идентификатор банка
     private String name; // Имя банка
-    public int officeCount; // Кол-во офисов
-    public int atmCount; // Кол-во банкоматов
+    private int officeCount; // Кол-во офисов
+    private int atmCount; // Кол-во банкоматов
     private int employeeCount; // Кол-во сотрудников
-    public int clientCount; // Кол-во клиентов
+    private int clientCount; // Кол-во клиентов
     private int rating; // Рейтинг банка
     private double totalMoney; // Всего денег в банке
     private double interestRate; // Процентная ставка
@@ -47,57 +50,14 @@ public class Bank {
         return baseRate * (1 - rating / 100.0);
     }
 
+    // Храним офисы в списке
+    @Getter
+    private List<BankOffice> offices = new ArrayList<>();
 
-    // Геттеры для полей
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getOfficeCount() {
-        return officeCount;
+    // Методы для работы с офисами
+    public void setOffices(List<BankOffice> offices) {
+        this.offices = offices;
+        this.officeCount = offices.size(); // Обновляем количество офисов
     }
 
-    public int getAtmCount() {
-        return atmCount;
-    }
-
-    public int getEmployeeCount() {
-        return employeeCount;
-    }
-
-    public int getClientCount() {
-        return clientCount;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public double getTotalMoney() {
-        return totalMoney;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-    //Переопределение метода toString()
-    @Override
-    public String toString() {
-        return "Bank{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", officeCount=" + officeCount +
-                ", atmCount=" + atmCount +
-                ", employeeCount=" + employeeCount +
-                ", clientCount=" + clientCount +
-                ", rating=" + rating +
-                ", totalMoney=" + totalMoney +
-                ", interestRate=" + interestRate +
-                '}';
-    }
 }
-
