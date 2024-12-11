@@ -18,21 +18,32 @@ public class BankOffice {
     private String status; // Статус
     private boolean canPlaceAtm; // Может ли разместить банкомат
     private int atmCount; // Количество банкоматов
-    public boolean canIssueCredit; // Может ли выдавать кредиты
+    private boolean canIssueCredit; // Может ли выдавать кредиты
     private boolean canWithdraw; // Можно ли снимать деньги
     private boolean canDeposit; // Можно ли вносить деньги
     private double amountOfMoney; // Количество денег
     private double rentCost; // Стоимость аренды
 
     private List<BankAtm> atmList = new ArrayList<>(); // Список банкоматов
-
-
-    // Ломбок с аннотацией @Data автоматически создает геттер
     @Getter
     private List<Employee> employeeList = new ArrayList<>();
 
-
-
+    public BankOffice(String id, String name, String address, String status, boolean canPlaceAtm, int atmCount,
+                      boolean canIssueCredit, boolean canWithdraw, boolean canDeposit, double amountOfMoney,
+                      double rentCost) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.status = status;
+        this.canPlaceAtm = canPlaceAtm;
+        this.atmCount = atmCount;
+        this.canIssueCredit = canIssueCredit;
+        this.canWithdraw = canWithdraw;
+        this.canDeposit = canDeposit;
+        this.amountOfMoney = amountOfMoney;
+        this.rentCost = rentCost;
+    }
 
 
 }
+

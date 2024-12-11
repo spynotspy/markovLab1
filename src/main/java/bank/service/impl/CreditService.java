@@ -72,7 +72,7 @@ public class CreditService {
     private static BankOffice selectOffice(List<BankOffice> bankOffices) throws InvalidOfficeException {
         // Выбор офиса
         for (BankOffice office : bankOffices) {
-            if ("работает".equals(office.getStatus()) && office.canIssueCredit) {
+            if ("работает".equals(office.getStatus()) && office.isCanIssueCredit()) {
                 return office;
             }
         }
